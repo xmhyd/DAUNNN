@@ -63,7 +63,7 @@ titleStroke.Transparency = 0.5
 local title = Instance.new("TextLabel", titleFrame)
 title.Size = UDim2.new(1, -60, 1, 0)
 title.Position = UDim2.new(0, 15, 0, 0)
-title.Text = "✨ TELEPORTER PRO"
+title.Text = "ROBERT DAUN"
 title.Font = Enum.Font.GothamBold
 title.TextSize = 16
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -161,7 +161,7 @@ statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 local toggle = Instance.new("TextButton", frame)
 toggle.Size = UDim2.new(1, -20, 0, 45)
 toggle.Position = UDim2.new(0, 10, 0, 110)
-toggle.Text = "🚀 START TELEPORT"
+toggle.Text = "START ANJING"
 toggle.Font = Enum.Font.GothamBold
 toggle.TextSize = 14
 toggle.BackgroundColor3 = Color3.fromRGB(50, 120, 200)
@@ -190,11 +190,11 @@ local humanoidRootPart = nil
 
 -- COORDINATES
 local coords = {
-    Vector3.new(-621, 241, -383),
-    Vector3.new(-1203, 257, -487),
-    Vector3.new(-1399, 574, -949),
-    Vector3.new(-1701, 812, -1399),
-    Vector3.new(-3231, 1718, -2590),
+    Vector3.new(-621, 241, -380),
+    Vector3.new(-1203, 257, -484),
+    Vector3.new(-1399, 574, -946),
+    Vector3.new(-1701, 812, -1396),
+    Vector3.new(-3231, 1718, -2585),
     Vector3.new(-6, 10, -7),
 }
 
