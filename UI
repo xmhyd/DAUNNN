@@ -190,11 +190,11 @@ local humanoidRootPart = nil
 
 -- COORDINATES
 local coords = {
-    Vector3.new(-621, 241, -380),
-    Vector3.new(-1203, 257, -484),
-    Vector3.new(-1399, 574, -946),
-    Vector3.new(-1701, 812, -1396),
-    Vector3.new(-3231, 1718, -2585),
+    Vector3.new(-621, 241, -375),
+    Vector3.new(-1203, 257, -480),
+    Vector3.new(-1399, 574, -940),
+    Vector3.new(-1701, 812, -1390),
+    Vector3.new(-3231, 1718, -2580),
     Vector3.new(-6, 10, -7),
 }
 
