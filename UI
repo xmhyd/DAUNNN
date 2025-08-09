@@ -1,0 +1,352 @@
+local player = game:GetService("Players").LocalPlayer
+local uis = game:GetService("UserInputService")
+local tweenService = game:GetService("TweenService")
+
+-- MAIN GUI
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "Enhanced Teleporter"
+gui.ResetOnSpawn = false
+
+-- MAIN FRAME dengan Shadow Effect
+local shadowFrame = Instance.new("Frame", gui)
+shadowFrame.Size = UDim2.new(0, 350, 0, 180)
+shadowFrame.Position = UDim2.new(0.5, -175, 0.3, 0)
+shadowFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+shadowFrame.BackgroundTransparency = 0.3
+shadowFrame.BorderSizePixel = 0
+Instance.new("UICorner", shadowFrame).CornerRadius = UDim.new(0, 15)
+
+local frame = Instance.new("Frame", shadowFrame)
+frame.Size = UDim2.new(1, -4, 1, -4)
+frame.Position = UDim2.new(0, 2, 0, 2)
+frame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
+
+-- GRADIENT BACKGROUND
+local gradient = Instance.new("UIGradient", frame)
+gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 35)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 15))
+}
+gradient.Rotation = 45
+
+-- ANIMATED BORDER
+local stroke = Instance.new("UIStroke", frame)
+stroke.Thickness = 2
+stroke.Transparency = 0.2
+stroke.Color = Color3.fromRGB(100, 200, 255)
+
+-- BORDER ANIMATION
+task.spawn(function()
+    while task.wait(0.1) do
+        local hue = tick() % 6 / 6
+        stroke.Color = Color3.fromHSV(hue, 0.8, 1)
+    end
+end)
+
+-- TITLE SECTION
+local titleFrame = Instance.new("Frame", frame)
+titleFrame.Size = UDim2.new(1, -20, 0, 50)
+titleFrame.Position = UDim2.new(0, 10, 0, 10)
+titleFrame.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
+titleFrame.BorderSizePixel = 0
+Instance.new("UICorner", titleFrame).CornerRadius = UDim.new(0, 8)
+
+local titleStroke = Instance.new("UIStroke", titleFrame)
+titleStroke.Thickness = 1
+titleStroke.Color = Color3.fromRGB(40, 50, 70)
+titleStroke.Transparency = 0.5
+
+local title = Instance.new("TextLabel", titleFrame)
+title.Size = UDim2.new(1, -60, 1, 0)
+title.Position = UDim2.new(0, 15, 0, 0)
+title.Text = "✨ TELEPORTER PRO"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1
+title.TextXAlignment = Enum.TextXAlignment.Left
+
+-- RAINBOW TITLE ANIMATION
+task.spawn(function()
+    while task.wait(0.15) do
+        local hue = tick() % 3 / 3
+        title.TextColor3 = Color3.fromHSV(hue, 1, 1)
+    end
+end)
+
+-- CLOSE BUTTON
+local closeBtn = Instance.new("TextButton", titleFrame)
+closeBtn.Size = UDim2.new(0, 30, 0, 30)
+closeBtn.Position = UDim2.new(1, -40, 0, 10)
+closeBtn.Text = "×"
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 18
+closeBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+closeBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 20)
+closeBtn.BorderSizePixel = 0
+Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 6)
+
+-- CLOSE HOVER EFFECT
+closeBtn.MouseEnter:Connect(function()
+    local tween = tweenService:Create(closeBtn, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    })
+    tween:Play()
+end)
+
+closeBtn.MouseLeave:Connect(function()
+    local tween = tweenService:Create(closeBtn, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(40, 20, 20)
+    })
+    tween:Play()
+end)
+
+-- MINIMIZE BUTTON
+local minBtn = Instance.new("TextButton", titleFrame)
+minBtn.Size = UDim2.new(0, 30, 0, 30)
+minBtn.Position = UDim2.new(1, -75, 0, 10)
+minBtn.Text = "−"
+minBtn.Font = Enum.Font.GothamBold
+minBtn.TextSize = 16
+minBtn.TextColor3 = Color3.fromRGB(100, 200, 255)
+minBtn.BackgroundColor3 = Color3.fromRGB(20, 40, 60)
+minBtn.BorderSizePixel = 0
+Instance.new("UICorner", minBtn).CornerRadius = UDim.new(0, 6)
+
+-- MINIMIZE HOVER EFFECT
+minBtn.MouseEnter:Connect(function()
+    local tween = tweenService:Create(minBtn, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(50, 100, 150)
+    })
+    tween:Play()
+end)
+
+minBtn.MouseLeave:Connect(function()
+    local tween = tweenService:Create(minBtn, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(20, 40, 60)
+    })
+    tween:Play()
+end)
+
+-- STATUS INDICATOR
+local statusFrame = Instance.new("Frame", frame)
+statusFrame.Size = UDim2.new(1, -20, 0, 30)
+statusFrame.Position = UDim2.new(0, 10, 0, 70)
+statusFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+statusFrame.BorderSizePixel = 0
+Instance.new("UICorner", statusFrame).CornerRadius = UDim.new(0, 8)
+
+local statusDot = Instance.new("Frame", statusFrame)
+statusDot.Size = UDim2.new(0, 12, 0, 12)
+statusDot.Position = UDim2.new(0, 15, 0, 9)
+statusDot.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+statusDot.BorderSizePixel = 0
+Instance.new("UICorner", statusDot).CornerRadius = UDim.new(0, 6)
+
+local statusLabel = Instance.new("TextLabel", statusFrame)
+statusLabel.Size = UDim2.new(1, -40, 1, 0)
+statusLabel.Position = UDim2.new(0, 35, 0, 0)
+statusLabel.Text = "Status: OFFLINE"
+statusLabel.Font = Enum.Font.Gotham
+statusLabel.TextSize = 12
+statusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+statusLabel.BackgroundTransparency = 1
+statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+-- MAIN TOGGLE BUTTON
+local toggle = Instance.new("TextButton", frame)
+toggle.Size = UDim2.new(1, -20, 0, 45)
+toggle.Position = UDim2.new(0, 10, 0, 110)
+toggle.Text = "🚀 START TELEPORT"
+toggle.Font = Enum.Font.GothamBold
+toggle.TextSize = 14
+toggle.BackgroundColor3 = Color3.fromRGB(50, 120, 200)
+toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggle.BorderSizePixel = 0
+Instance.new("UICorner", toggle).CornerRadius = UDim.new(0, 10)
+
+-- TOGGLE GRADIENT
+local toggleGradient = Instance.new("UIGradient", toggle)
+toggleGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 140, 220)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 100, 180))
+}
+toggleGradient.Rotation = 90
+
+-- TOGGLE STROKE
+local toggleStroke = Instance.new("UIStroke", toggle)
+toggleStroke.Thickness = 1
+toggleStroke.Color = Color3.fromRGB(100, 160, 240)
+toggleStroke.Transparency = 0.3
+
+-- VARIABLES
+local isActive = false
+local isMinimized = false
+local humanoidRootPart = nil
+
+-- COORDINATES
+local coords = {
+    Vector3.new(-621, 241, -383),
+    Vector3.new(-1203, 257, -487),
+    Vector3.new(-1399, 574, -949),
+    Vector3.new(-1701, 812, -1399),
+    Vector3.new(-3231, 1718, -2590),
+    Vector3.new(-6, 10, -7),
+}
+
+-- FUNCTIONS
+local function updateHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    humanoidRootPart = char:WaitForChild("HumanoidRootPart")
+end
+
+local function updateStatus(active)
+    if active then
+        statusLabel.Text = "Status: ACTIVE"
+        statusDot.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+        
+        -- Pulsing effect for active dot
+        task.spawn(function()
+            while isActive do
+                local tween = tweenService:Create(statusDot, TweenInfo.new(0.5), {
+                    BackgroundTransparency = 0.3
+                })
+                tween:Play()
+                tween.Completed:Wait()
+                
+                tween = tweenService:Create(statusDot, TweenInfo.new(0.5), {
+                    BackgroundTransparency = 0
+                })
+                tween:Play()
+                tween.Completed:Wait()
+            end
+        end)
+    else
+        statusLabel.Text = "Status: OFFLINE"
+        statusDot.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+        statusDot.BackgroundTransparency = 0
+    end
+end
+
+-- MINIMIZE FUNCTIONALITY
+minBtn.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    
+    local targetSize = isMinimized and UDim2.new(0, 350, 0, 70) or UDim2.new(0, 350, 0, 180)
+    local shadowTargetSize = isMinimized and UDim2.new(0, 350, 0, 70) or UDim2.new(0, 350, 0, 180)
+    
+    local tween = tweenService:Create(frame, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {
+        Size = targetSize
+    })
+    local shadowTween = tweenService:Create(shadowFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {
+        Size = shadowTargetSize
+    })
+    
+    tween:Play()
+    shadowTween:Play()
+    
+    for _, obj in ipairs(frame:GetChildren()) do
+        if obj:IsA("GuiObject") and obj ~= titleFrame then
+            obj.Visible = not isMinimized
+        end
+    end
+    
+    minBtn.Text = isMinimized and "+" or "−"
+end)
+
+-- CLOSE FUNCTIONALITY
+closeBtn.MouseButton1Click:Connect(function()
+    local tween = tweenService:Create(gui, TweenInfo.new(0.3, Enum.EasingStyle.Back), {
+        Size = UDim2.new(0, 0, 0, 0)
+    })
+    tween:Play()
+    tween.Completed:Wait()
+    gui:Destroy()
+end)
+
+-- CHARACTER SETUP
+player.CharacterAdded:Connect(function()
+    updateHRP()
+end)
+
+updateHRP()
+
+-- TELEPORT LOOP
+task.spawn(function()
+    while task.wait(0.1) do
+        if isActive and humanoidRootPart then
+            for _, pos in ipairs(coords) do
+                if not isActive then break end
+                humanoidRootPart.CFrame = CFrame.new(pos)
+                task.wait(0.1)
+            end
+        end
+    end
+end)
+
+-- TOGGLE BUTTON FUNCTIONALITY
+toggle.MouseButton1Click:Connect(function()
+    isActive = not isActive
+    
+    -- Button animation
+    local scaleDown = tweenService:Create(toggle, TweenInfo.new(0.1), {
+        Size = UDim2.new(1, -25, 0, 40)
+    })
+    local scaleUp = tweenService:Create(toggle, TweenInfo.new(0.1), {
+        Size = UDim2.new(1, -20, 0, 45)
+    })
+    
+    scaleDown:Play()
+    scaleDown.Completed:Wait()
+    scaleUp:Play()
+    
+    if isActive then
+        toggle.Text = "🛑 STOP TELEPORT"
+        toggleGradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(220, 70, 70)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 30, 30))
+        }
+        toggleStroke.Color = Color3.fromRGB(240, 100, 100)
+    else
+        toggle.Text = "🚀 START TELEPORT"
+        toggleGradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 140, 220)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 100, 180))
+        }
+        toggleStroke.Color = Color3.fromRGB(100, 160, 240)
+    end
+    
+    updateStatus(isActive)
+end)
+
+-- HOVER EFFECTS FOR TOGGLE
+toggle.MouseEnter:Connect(function()
+    local tween = tweenService:Create(toggle, TweenInfo.new(0.2), {
+        Size = UDim2.new(1, -15, 0, 47)
+    })
+    tween:Play()
+end)
+
+toggle.MouseLeave:Connect(function()
+    local tween = tweenService:Create(toggle, TweenInfo.new(0.2), {
+        Size = UDim2.new(1, -20, 0, 45)
+    })
+    tween:Play()
+end)
+
+-- STARTUP ANIMATION
+shadowFrame.Size = UDim2.new(0, 0, 0, 0)
+shadowFrame.Position = UDim2.new(0.5, 0, 0.3, 90)
+
+local startupTween = tweenService:Create(shadowFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back), {
+    Size = UDim2.new(0, 350, 0, 180),
+    Position = UDim2.new(0.5, -175, 0.3, 0)
+})
+startupTween:Play()
+
+-- Initial status
+updateStatus(false)
