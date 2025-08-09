@@ -305,14 +305,14 @@ toggle.MouseButton1Click:Connect(function()
     scaleUp:Play()
     
     if isActive then
-        toggle.Text = "🛑 STOP TELEPORT"
+        toggle.Text = "🛑 STOP TOT"
         toggleGradient.Color = ColorSequence.new{
             ColorSequenceKeypoint.new(0, Color3.fromRGB(220, 70, 70)),
             ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 30, 30))
         }
         toggleStroke.Color = Color3.fromRGB(240, 100, 100)
     else
-        toggle.Text = "🚀 START TELEPORT"
+        toggle.Text = "🚀 START JING"
         toggleGradient.Color = ColorSequence.new{
             ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 140, 220)),
             ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 100, 180))
