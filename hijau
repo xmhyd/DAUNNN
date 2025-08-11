@@ -32,7 +32,7 @@ title.TextXAlignment = Enum.TextXAlignment.Left
 
 -- WARNA-WARNI JUDUL
 task.spawn(function()
-	while task.wait(0.2) do
+	while task.wait(3) do
 		title.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
 	end
 end)
@@ -99,12 +99,12 @@ updateHRP()
 
 -- TELEPORT LOOP
 task.spawn(function()
-	while task.wait(0.1) do
+	while task.wait(3) do
 		if isActive and humanoidRootPart then
 			for _, pos in ipairs(coords) do
 				if not isActive then break end
 				humanoidRootPart.CFrame = CFrame.new(pos)
-				task.wait(0.1)
+				task.wait(3)
 			end
 		end
 	end
